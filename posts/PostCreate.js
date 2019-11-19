@@ -90,12 +90,12 @@ class PostCreate extends Component {
       draft:false,
       title:null,
       content:null,
-      publish:null,
+      publish:moment(new Date()).format('YYYY-MM-DD'),
     })
     this.postTitleRef.current.focus()
   }
   render() {
-    const today=moment(new Date()).format('YYYY-MM-DD')
+    const {publish}=this.state
     return(
     <form onSubmit={this.handleSubmit} ref={(el)=>this.postCreateForm=el}>
       <div className='form-group'>
@@ -112,7 +112,7 @@ class PostCreate extends Component {
       </div>
       <div className='form-group'>
       <label for='content'>Post content</label>
-      <textarea type='text' name='content' id='content' className='form-control' placeholder='Block for content' onChange={this.handleInputChange} required='required' ref={this.clearFormRefs}/>
+      <textarea type='text' name='content' id='content' className='form-control' placeholder='Block for content' onChange={this.handleInputChange} required='required' ref={this.postContentRef}/>
       </div>
       <div className='form-group'>
       <label for='draft'>Post draft</label>
@@ -127,7 +127,7 @@ class PostCreate extends Component {
       className='form-control' 
       placeholder='mm/dd/yyyy' 
       onChange={this.handleInputChange} 
-      value={today}
+      value={publish}
       required='required'/>
       </div>
       <button className='btn btn-primary'>Save</button>

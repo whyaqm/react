@@ -34,17 +34,10 @@ class Posts extends Component {
         console.log("error",error)
       })
   }
-  createPosts(){
+  createPosts(data){
     const endpoint='/api/posts/'
     const csrfToken=cookie.load('csrftoken')
     let thisComp=this
-    let data={
-      "slug": "",
-      "title": "",
-      "content": "",
-      "draft": false,
-      "publish": null
-    }
     if(csrfToken!==undefined){
       let lookupOptions={
         method:'POST',
@@ -91,6 +84,7 @@ class Posts extends Component {
   render() {
     const{posts}=this.state
     const{postsListClass}=this.state
+    const csrfToken=cookie.load('csrftoken')
     return (
       <div>
       <h1>Hi Joy!</h1>
@@ -100,11 +94,11 @@ class Posts extends Component {
         <PostInline post={postItem} elClass={postsListClass}/>
         )
       }):<p>No found.</p>}
-      {(csrfToken!==undefined&&csrfToken!==null ?
+      {(csrfToken!==undefined&&csrfToken!==null) ?
       <div className='my-5'>
       <PostCreate/>
       </div>
-        :"")}
+        :""}
       </div>
     );
   }

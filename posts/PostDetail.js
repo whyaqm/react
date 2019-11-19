@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom'
 
 class PostDetail extends Component {
   constructor(props){
@@ -18,7 +19,13 @@ class PostDetail extends Component {
   render() {
     const {slug}=this.state
     return (
-      <p>{(slug!==null && slug!==undefined)? <div>{slug}</div>:"Not found"}</p>
+      <p>{(slug!==null && slug!==undefined)? <div>
+        {slug}
+      <p className='lead'><Link maintainScrollPosition={false} to={{
+          pathname:`/posts/`,
+            state:{fromDashboard:false}
+        }}>Posts</Link></p>
+        </div>:"Not found"}</p>
     );
   }
 }

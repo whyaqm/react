@@ -109,7 +109,7 @@ class PostCreate extends Component {
       </div>
       <div className='form-group'>
       <label for='content'>Post content</label>
-      <textarea type='text' name='content' id='content' className='form-control' placeholder='Block for content' onChange={this.handleInputChange} required='required' ref={this.clearFormRefs}/>
+      <textarea type='text' name='content' id='content' className='form-control' placeholder='Block for content' onChange={this.handleInputChange} required='required' ref={this.postContentRef}/>
       </div>
       <div className='form-group'>
       <label for='draft'>Post draft</label>

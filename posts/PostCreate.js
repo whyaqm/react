@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import cookie from 'react-cookies'
 import 'whatwg-fetch'
+import moment from 'moment'
+
 
 class PostCreate extends Component {
   constructor(props){
@@ -93,6 +95,7 @@ class PostCreate extends Component {
     this.postTitleRef.current.focus()
   }
   render() {
+    const today=moment(new Date()).format('YYYY-MM-DD')
     return(
     <form onSubmit={this.handleSubmit} ref={(el)=>this.postCreateForm=el}>
       <div className='form-group'>
@@ -117,7 +120,15 @@ class PostCreate extends Component {
       </div>
       <div className='form-group'>
       <label for='publish'>Post publish</label>
-      <input type='date' name='publish' id='publish' className='form-control' placeholder='mm/dd/yyyy' onChange={this.handleInputChange} required='required'/>
+      <input 
+      type='date' 
+      name='publish' 
+      id='publish' 
+      className='form-control' 
+      placeholder='mm/dd/yyyy' 
+      onChange={this.handleInputChange} 
+      value={today}
+      required='required'/>
       </div>
       <button className='btn btn-primary'>Save</button>
       <button className='btn btn-secondary' onClick={this.clearForm}>Cancel</button>

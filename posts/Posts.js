@@ -34,33 +34,6 @@ class Posts extends Component {
         console.log("error",error)
       })
   }
-  createPosts(data){
-    const endpoint='/api/posts/'
-    const csrfToken=cookie.load('csrftoken')
-    let thisComp=this
-    if(csrfToken!==undefined){
-      let lookupOptions={
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json',
-          'X-CSRFToken':csrfToken
-        },
-        body:JSON.stringify(data),
-        credentials:'include'
-      }
-      fetch(endpoint,lookupOptions)
-        .then(function(response){
-          return response.json()
-        }).then(function(responseData){
-          console.log(responseData)
-          thisComp.setState({
-            posts:responseData
-          })
-        }).catch(function(error){
-          console.log("error",error)
-        })
-    }
-  }
   togglePostListClass(event){
     event.preventDefault()
     let currentListClass=this.state.postsListClass

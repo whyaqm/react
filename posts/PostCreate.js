@@ -8,6 +8,34 @@ class PostCreate extends Component {
     this.handleSubmit=this.handleSubmit.bind(this)
     this.handleInputChange=this.handleInputChange.bind(this)
   }
+  createPosts(data){
+    const endpoint='/api/posts/'
+    const csrfToken=cookie.load('csrftoken')
+    let thisComp=this
+    if(csrfToken!==undefined){
+      let lookupOptions={
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'X-CSRFToken':csrfToken
+        },
+        body:JSON.stringify(data),
+        credentials:'include'
+      }
+      fetch(endpoint,lookupOptions)
+        .then(function(response){
+          return response.json()
+        }).then(function(responseData){
+          console.log(responseData)
+          thisComp.setState({
+            posts:responseData
+          })
+        }).catch(function(error){
+          console.log("error",error)
+          alert('An error occured!')
+        })
+    }
+  }
   handleSubmit(event){
     event.preventDefault()
   //  console.log(this.state)
@@ -17,7 +45,8 @@ class PostCreate extends Component {
     }else{
       data['draft']=false
     }
-    console.log(data)
+//    console.log(data)
+    this.createPosts(data)
   }
   handleInputChange(event){
     event.preventDefault()

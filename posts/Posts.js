@@ -8,6 +8,7 @@ class Posts extends Component {
   constructor(props){
     super(props)
     this.togglePostListClass=this.togglePostListClass.bind(this)
+    this.handleNewPost=this.handleNewPost.bind(this)
   }
   state={
     posts:[],
@@ -33,6 +34,14 @@ class Posts extends Component {
       }).catch(function(error){
         console.log("error",error)
       })
+  }
+  handleNewPost(postItemData){
+    console.log(postItemData)
+    let currentPosts=this.state.posts
+    currentPosts.unshift(postItemData)
+    this.setState({
+      posts:currentPosts
+    })
   }
   togglePostListClass(event){
     event.preventDefault()
@@ -69,7 +78,7 @@ class Posts extends Component {
       }):<p>No found.</p>}
       {(csrfToken!==undefined&&csrfToken!==null) ?
       <div className='my-5'>
-      <PostCreate/>
+      <PostCreate newPostItemCreated={this.handleNewPost}/>
       </div>
         :""}
       </div>

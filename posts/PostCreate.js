@@ -27,9 +27,9 @@ class PostCreate extends Component {
           return response.json()
         }).then(function(responseData){
           console.log(responseData)
-          thisComp.setState({
-            posts:responseData
-          })
+          if(thisComp.props.newPostItemCreated){
+            thisComp.props.newPostItemCreated(responseData)
+          } 
         }).catch(function(error){
           console.log("error",error)
           alert('An error occured!')

@@ -9,6 +9,7 @@ class PostCreate extends Component {
     super(props)
     this.handleSubmit=this.handleSubmit.bind(this)
     this.handleInputChange=this.handleInputChange.bind(this)
+    this.handleDraftChange=this.handleDraftChange.bind(this)
     this.clearForm=this.clearForm.bind(this)
     this.postTitleRef=React.createRef()
     this.postContentRef=React.createRef()
@@ -51,19 +52,11 @@ class PostCreate extends Component {
   }
   handleSubmit(event){
     event.preventDefault()
-  //  console.log(this.state)
     let data=this.state
-    if(data['draft']==='on'){
-      data['draft']=true
-    }else{
-      data['draft']=false
-    }
-//    console.log(data)
     this.createPosts(data)
   }
   handleInputChange(event){
     event.preventDefault()
-    console.log(event.target.name,event.target.value)
     let key=event.target.name
     let value=event.target.value
     if (key==='title'){
@@ -73,6 +66,11 @@ class PostCreate extends Component {
     }
     this.setState({
       [key]:value
+    })
+  }
+  handleDraftChange(event){
+    this.setState({
+      draft:!this.state.draft
     })
   }
   clearForm(event){
@@ -115,8 +113,10 @@ class PostCreate extends Component {
       <textarea type='text' name='content' id='content' className='form-control' placeholder='Block for content' onChange={this.handleInputChange} required='required' ref={this.postContentRef}/>
       </div>
       <div className='form-group'>
-      <label for='draft'>Post draft</label>
-      <input type='checkbox' name='draft' id='draft' className='ml-2' placeholder='Block for draft' onChange={this.handleInputChange}/>
+      <label for='draft'>
+      <input type='checkbox' name='draft' checked={this.state.draft} id='draft' className='ml-2' placeholder='Block for draft' onChange={this.handleDraftChange}/>
+      Post draft</label>
+      <button onClick={(event)=>{event.preventDefault();this.handleDraftChange()}}>Toggle draft</button>
       </div>
       <div className='form-group'>
       <label for='publish'>Post publish</label>

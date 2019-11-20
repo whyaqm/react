@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import cookie from 'react-cookies'
 import 'whatwg-fetch'
 import {Link} from 'react-router-dom'
-
+import PostUpdate from './PostUpdate'
 class PostDetail extends Component {
   constructor(props){
     super(props)
@@ -76,7 +76,7 @@ class PostDetail extends Component {
           pathname:`/posts/`,
             state:{fromDashboard:false}
         }}>Posts</Link></p>
-          {post.owner===true?<div>Update post</div>:""}
+          {post.owner===true?<PostUpdate post={post}/>:""}
           </div>
         }
         </div>:"Loading..."}</p>

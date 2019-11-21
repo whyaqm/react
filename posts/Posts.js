@@ -9,13 +9,27 @@ class Posts extends Component {
     super(props)
     this.togglePostListClass=this.togglePostListClass.bind(this)
     this.handleNewPost=this.handleNewPost.bind(this)
+    this.loadMorePosts=this.loadMorePosts.bind(this)
   }
   state={
     posts:[],
     postsListClass:"card",
+    next:null,
+    previous:null,
+    author:false,
+    count:0,
   }
-  loadPosts(){
-    const endpoint='/api/posts/'
+  loadMorePosts(){
+    const{next}=this.state
+    if(next!==null||next!==undefined){
+      this.loadPosts(next)
+    }
+  }
+  loadPosts(nextEndpoint){
+    let endpoint='/api/posts/'
+    if(nextEndpoint!==undefined){
+      endpoint=nextEndpoint
+    }
     let thisComp=this
     let lookupOptions={
       method:'GET',
@@ -29,7 +43,11 @@ class Posts extends Component {
       }).then(function(responseData){
         console.log(responseData)
         thisComp.setState({
-          posts:responseData
+          posts:thisComp.state.posts.concat(responseData.results),
+          next:responseData.next,
+          previous:responseData.previous,
+          author:responseData.author,
+          coutn:responseData.count,
         })
       }).catch(function(error){
         console.log("error",error)
@@ -60,26 +78,32 @@ class Posts extends Component {
     this.setState({
       posts:[],
       postsListClass:"card",
+      next:null,
+      previous:null,
+      author:false,
+      count:0,
     })
     this.loadPosts()
   }
   render() {
     const{posts}=this.state
     const{postsListClass}=this.state
-    const csrfToken=cookie.load('csrftoken')
+    const{author}=this.state
+    const{next}=this.state
     return (
       <div>
       <h1>Hi Joy!</h1>
-      <Link maintainScrollPosition={false} to={{
+      {author===true?<Link className='mr-2' maintainScrollPosition={false} to={{
           pathname:`/posts/create`,
             state:{fromDashboard:false}
-        }}>Create Post</Link>
+        }}>Create Post</Link>:""}
       <button onClick={this.togglePostListClass}>Toggle Class</button>
       {posts.length>0?posts.map((postItem,index)=>{
         return (
         <PostInline post={postItem} elClass={postsListClass}/>
         )
       }):<p>No found.</p>}
+      {next!==null?<button onClick={this.loadMorePosts}>Load more</button>:''}
       </div>
     );
   }

@@ -1,14 +1,20 @@
-//left for reference
+import React, { Component } from 'react';
+import cookie from 'react-cookies'
+import 'whatwg-fetch'
+import moment from 'moment'
+import PostForm from'./PostForm'
 
 
-
-//import React, { Component } from 'react';
-//import cookie from 'react-cookies'
-//import 'whatwg-fetch'
-//import moment from 'moment'
-//
-//
-//class PostCreate extends Component {
+class PostCreate extends Component {
+  render(){
+    return(
+    <div>
+      <h1>Create Post</h1>
+      <PostForm/>
+      </div>
+    )
+  }
+}
 //  constructor(props){
 //    super(props)
 //    this.handleSubmit=this.handleSubmit.bind(this)
@@ -141,4 +147,4 @@
 //  }
 //}
 //
-//export default PostCreate;
+export default PostCreate;
